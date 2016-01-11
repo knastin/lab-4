@@ -36,5 +36,10 @@ public class App
                 System.out.print(e.getMessage());
             }
         }
-        System.out.println("name");
+        System.out.println("Главный поток завершён...");
     }
+    @FunctionalInterface
+    public interface NumberCrusher {
+        int multiply(int num);
+    }
+}
