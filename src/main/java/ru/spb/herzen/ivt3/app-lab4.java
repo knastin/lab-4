@@ -1,67 +1,25 @@
-ackage ru.spb.herzen.ivt3;
+package ru.spb.herzen.ivt3;
 
-
-import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
+import java.util.Random;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class Nastya {
-    public static void main(String[] args) {
-        List<Integer> randomNums = new ArrayList<Integer>();
-        for (int i = 0; i < 10; i = i + 1) {
-            randomNums.add((int) (Math.random() * ((1000) + 1)));
-        }
-        Consumer<Integer> NumberCrusher = (x) -> {
-            System.out.println(x * 2);
-        };
-        randomNums
-                .stream()
-                .filter(num -> num % 2 == 0)
-                .sorted()
-                .forEach(NumberCrusher);
+public class App
+{
+    public static void main( String[] args )
+    {
+        Function<Integer, Integer> NumberCrusher = n -> n*2;
 
+        System.out.println("List of numbers");
+        List<Integer> numbers = new Random().ints(10, 0, 100).mapToObj(i -> new Integer(i)).collect(Collectors.toList());
+        numbers.forEach(System.out::println);
 
-        List<Integer> intList = new ArrayList<>();
+        System.out.println("List of even numbers");
+        numbers = numbers.stream().filter(i -> i%2==0).sorted().collect(Collectors.toList());
+        numbers.forEach(System.out::println);
 
-        Consumer<List> addToIntList = (listName) -> {
-            for (int i = 0; i < 30; i = i + 1) {
-                listName.add((int) (Math.random() * ((1000) + 1)));
-            }
-        };
-        addToIntList.accept(intList);
-
-
-        intList
-                .stream()
-                .sorted()
-                .forEach(num -> {
-                    System.out.println(num);
-                });
-
-        List<Integer> EvenNumsList = intList
-                .stream()
-                .sorted()
-                .filter(num -> num % 2 == 0)
-                .collect(Collectors.toCollection(ArrayList::new));
-
-        System.out.println("The amount of even numbers: " + EvenNumsList.size());
-
-        String name;
-        name = "Anastasia";
-
-        List<Character> myNameCharList = new ArrayList<Character>();
-
-        for (char nameChar : name.toCharArray()) {
-            myNameCharList.add(nameChar);
-        }
-
-        myNameCharList
-                .stream()
-                .sorted()
-                .forEach(letter -> {
-                    System.out.println(letter);
-                });
-
+        System.out.println("List of even numbers that is multiplied by 2 by NumberCruncher.");
+        numbers.stream().map(NumberCrusher).forEach(System.out::println);
     }
 }
